@@ -36,11 +36,16 @@ return_client_dat$var_names = var_names
 return_client_dat$Frequency = as.factor(return_client_dat$Frequency)
 return_client_dat$Percent = return_client_dat$Percent / 100
 
-plot_return_client = ggplot(return_client_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+return_client_dat$Frequency = paste0("n=",return_client_dat$Frequency)
+plot_return_client = ggplot(return_client_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="Are you a new or returning client?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+    scale_y_continuous(labels = scales::percent, limits = c(0,1))+scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = return_client_dat$Frequency, vjust = -.5)
 plot_return_client
+
 ```
 Plot, n and percentage for instructions
 
@@ -63,11 +68,17 @@ instructions_dat$Percent = instructions_dat$Percent / 100
 
 instructions_dat$var_names = factor(instructions_dat$var_names,levels = c("Very Clear", "Mostly clear", "Somewhat Clear", "Not at all Clear"))
 
-plot_instructions = ggplot(instructions_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+instructions_dat$Frequency = paste0("n=",instructions_dat$Frequency)
+plot_instructions = ggplot(instructions_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="Were the instructions for how to access your appointment online clear?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = instructions_dat$Frequency, vjust = -.5)
 plot_instructions
+
+
 ```
 Plot, n and percentage for quick
 
@@ -90,11 +101,15 @@ quick_dat$Percent = quick_dat$Percent / 100
 
 quick_dat$var_names = factor(quick_dat$var_names,levels = c("Very Satisfied", "Mostly Satisfied", "Somewhat Satisfied", "Not Satisfied"))
 
-plot_quick = ggplot(quick_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+
+quick_dat$Frequency = paste0("n=",quick_dat$Frequency)
+plot_quick = ggplot(quick_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="Were you satisfied with how quickly you got an appointment?", x ="Response option", y = "Percent")+
   scale_y_continuous(labels = scales::percent, limits = c(0,1))+
-  scale_fill_manual(values = c("red", "blue", "green", "purple"))
+  scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = quick_dat$Frequency, vjust = -.5)
 plot_quick
 ```
 Next item: communicate
@@ -169,11 +184,18 @@ substance_dat$Percent = substance_dat$Percent / 100
 
 substance_dat$var_names = factor(substance_dat$var_names,levels = c("Strongly agree", "Agree", "Undecided", "Disagree", "Strongly disagree"))
 
-plot_substance = ggplot(substance_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+substance_dat$Frequency = paste0("n=",substance_dat$Frequency)
+plot_substance = ggplot(substance_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="The use of technology accessed through Centerstone has helped \n me reduce my substance use.", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = substance_dat$Frequency, vjust = -.5)
 plot_substance
+
+
+
 ```
 Next item: manage
 ```{r}
@@ -193,11 +215,17 @@ manage_dat$Percent = manage_dat$Percent / 100
 
 manage_dat$var_names = factor(manage_dat$var_names,levels = c("Strongly agree", "Agree", "Undecided", "Disagree", "Strongly disagree"))
 
-plot_manage = ggplot(manage_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+manage_dat$Frequency = paste0("n=",manage_dat$Frequency)
+plot_manage = ggplot(manage_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="The use of technology accessed through Centerstone has helped \n me manage my mental health symptoms.", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = manage_dat$Frequency, vjust = -.5)
 plot_manage
+
+
 ```
 Next item: recovery
 ```{r}
@@ -217,11 +245,18 @@ recovery_dat$Percent = recovery_dat$Percent / 100
 
 recovery_dat$var_names = factor(recovery_dat$var_names,levels = c("Strongly agree", "Agree", "Undecided", "Disagree", "Strongly disagree"))
 
-plot_recovery = ggplot(recovery_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+recovery_dat$Frequency = paste0("n=",recovery_dat$Frequency)
+plot_recovery = ggplot(recovery_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="The use of technology accessed through Centerstone has helped \n me support my mental health recovery.", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = recovery_dat$Frequency, vjust = -.5)
 plot_recovery
+
+
+
 ```
 Next item: recommend
 ```{r}
@@ -241,11 +276,20 @@ recommend_dat$Percent = recommend_dat$Percent / 100
 
 recommend_dat$var_names = factor(recommend_dat$var_names,levels = c("Definitely", "Very Likely", "Somewhat Likely", "Unlikely", "Would not recommend"))
 
-plot_recommend = ggplot(recommend_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+
+recommend_dat$Frequency = paste0("n=",recommend_dat$Frequency)
+plot_recommend = ggplot(recommend_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="Would you recommend Centerstone to your family and friends?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = recommend_dat$Frequency, vjust = -.5)
 plot_recommend
+
+
+
+
 ```
 Next item: expectation
 ```{r}
@@ -265,11 +309,17 @@ expectation_dat$Percent = expectation_dat$Percent / 100
 
 expectation_dat$var_names = factor(expectation_dat$var_names,levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
 
-plot_expectation = ggplot(expectation_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+expectation_dat$Frequency = paste0("n=",expectation_dat$Frequency)
+plot_expectation = ggplot(expectation_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="How would you rate your overall experience with telehealth at \n Centerstone?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  geom_text_repel(label = expectation_dat$Frequency, vjust = -.5)+
+  theme(legend.position = "none")
 plot_expectation
+
+
+
 ```
 Next item: prefer_service
 ```{r}
@@ -287,12 +337,16 @@ prefer_service_dat$var_names = var_names
 prefer_service_dat$Frequency = as.factor(prefer_service_dat$Frequency)
 prefer_service_dat$Percent = prefer_service_dat$Percent / 100
 
-plot_prefer_service = ggplot(prefer_service_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+prefer_service_dat$Frequency = paste0("n=",prefer_service_dat$Frequency)
+plot_prefer_service = ggplot(prefer_service_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="In the future, how would you prefer to receive services from \n Centerstone?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = prefer_service_dat$Frequency, vjust = -.5)
 plot_prefer_service
 ## Open in new window
+
 
 ```
 Next item: state
@@ -311,11 +365,17 @@ state_dat$var_names = var_names
 state_dat$Frequency = as.factor(state_dat$Frequency)
 state_dat$Percent = state_dat$Percent / 100
 
-plot_state = ggplot(state_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+state_dat$Frequency = paste0("n=",state_dat$Frequency)
+plot_state = ggplot(state_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="Which state do you currently live in?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = state_dat$Frequency, vjust = -.5)
 plot_state
+
+
+
 ```
 Age create buckets from NOMS
 
@@ -336,11 +396,16 @@ race_dat$var_names = var_names
 race_dat$Frequency = as.factor(race_dat$Frequency)
 race_dat$Percent = race_dat$Percent / 100
 
-plot_race = ggplot(race_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+race_dat$Frequency = paste0("n=",race_dat$Frequency)
+plot_race = ggplot(race_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="Which race do you currently live in?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = race_dat$Frequency, vjust = -.5)
 plot_race
+
+
 ```
 Gender
 ```{r}
@@ -358,9 +423,13 @@ gender_dat$var_names = var_names
 gender_dat$Frequency = as.factor(gender_dat$Frequency)
 gender_dat$Percent = gender_dat$Percent / 100
 
-plot_gender = ggplot(gender_dat, aes(x = var_names,y = Percent, fill = Frequency))+
+gender_dat$Frequency = paste0("n=",gender_dat$Frequency)
+
+plot_gender = ggplot(gender_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="Which gender do you currently live in?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = gender_dat$Frequency, vjust = -.5)
 plot_gender
 ```
