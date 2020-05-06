@@ -115,18 +115,7 @@ communicate_dat$Percent = communicate_dat$Percent / 100
 
 communicate_dat$var_names = factor(communicate_dat$var_names,levels = c("Strongly agree", "Agree", "Undecided", "Disagree", "Strongly disagree"))
 
-plot_communicate = ggplot(communicate_dat, aes(x = var_names,y = Percent, fill = Frequency))+
-  geom_bar(stat = "identity")+
-  labs(title="The use of technology accessed through Centerstone has helped me \n reduce my substance use.", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
-  scale_fill_manual(values = c("red", "blue", "green", "purple"))
-plot_communicate
-
-library(ggrepel)
-communicate_dat
-
 communicate_dat$Frequency = paste0("n=",communicate_dat$Frequency)
-
 plot_communicate = ggplot(communicate_dat, aes(x = var_names,y = Percent, fill = var_names))+
   geom_bar(stat = "identity")+
   labs(title="The use of technology accessed through Centerstone has helped me \n reduce my substance use.", x ="Response option", y = "Percent")+
@@ -135,8 +124,27 @@ plot_communicate = ggplot(communicate_dat, aes(x = var_names,y = Percent, fill =
   geom_text_repel(label = communicate_dat$Frequency, vjust = -.5)
 plot_communicate
 
-
 ```
+Testing communicate by variable 
+```{r}
+#### Test graph by a demographic.  If you want more demographics, just create interaction term (e.g., black females) into another variable and then plot by that.
+communicate_test =  na.omit(bin_fount_sat_dat[c("communicate", "gender")])
+communicate_test
+
+plot_instructions = ggplot(communicate_test, aes(x = communicate, fill = gender))+
+  geom_bar(aes(y = (..count..)/sum(..count..)),  position = 'dodge')+
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  labs(title="Were the instructions for how to access your appointment online clear?", x ="Category", y = "Percent")
+plot_instructions
+library(dplyr)
+count_gender = count(communicate_test, communicate, gender)
+communicate_test$test = ifelse(communicate_test$communicate == "Disagree" &  communicate_test$gender == "Female", count_gender$n[1], "Wrong")
+communicate_test
+
+count_gender = ifelse(communicate_test$communicate)
+```
+
+
 Next item: substance
 ```{r}
 library(ggplot2)
