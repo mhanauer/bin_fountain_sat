@@ -93,7 +93,8 @@ quick_dat$var_names = factor(quick_dat$var_names,levels = c("Very Satisfied", "M
 plot_quick = ggplot(quick_dat, aes(x = var_names,y = Percent, fill = Frequency))+
   geom_bar(stat = "identity")+
   labs(title="Were you satisfied with how quickly you got an appointment?", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  scale_fill_manual(values = c("red", "blue", "green", "purple"))
 plot_quick
 ```
 Next item: communicate
@@ -117,8 +118,24 @@ communicate_dat$var_names = factor(communicate_dat$var_names,levels = c("Strongl
 plot_communicate = ggplot(communicate_dat, aes(x = var_names,y = Percent, fill = Frequency))+
   geom_bar(stat = "identity")+
   labs(title="The use of technology accessed through Centerstone has helped me \n reduce my substance use.", x ="Response option", y = "Percent")+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
+  scale_fill_manual(values = c("red", "blue", "green", "purple"))
 plot_communicate
+
+library(ggrepel)
+communicate_dat
+
+communicate_dat$Frequency = paste0("n=",communicate_dat$Frequency)
+
+plot_communicate = ggplot(communicate_dat, aes(x = var_names,y = Percent, fill = var_names))+
+  geom_bar(stat = "identity")+
+  labs(title="The use of technology accessed through Centerstone has helped me \n reduce my substance use.", x ="Response option", y = "Percent")+
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+scale_fill_manual(values = c("red", "blue", "green", "purple"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = communicate_dat$Frequency, vjust = -.5)
+plot_communicate
+
+
 ```
 Next item: substance
 ```{r}
