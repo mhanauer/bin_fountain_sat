@@ -130,18 +130,24 @@ Testing communicate by variable
 #### Test graph by a demographic.  If you want more demographics, just create interaction term (e.g., black females) into another variable and then plot by that.
 communicate_test =  na.omit(bin_fount_sat_dat[c("communicate", "gender")])
 communicate_test
+communicate_test$communicate = factor(communicate_test$communicate,levels = c("Strongly agree", "Agree", "Undecided", "Disagree", "Strongly disagree"))
+communicate_test$gender = factor(communicate_test$gender,levels = c("Female", "Male"))
 
-plot_instructions = ggplot(communicate_test, aes(x = communicate, fill = gender))+
-  geom_bar(aes(y = (..count..)/sum(..count..)),  position = 'dodge')+
-  scale_y_continuous(labels = scales::percent, limits = c(0,1))+
-  labs(title="Were the instructions for how to access your appointment online clear?", x ="Category", y = "Percent")
-plot_instructions
-library(dplyr)
 count_gender = count(communicate_test, communicate, gender)
-communicate_test$test = ifelse(communicate_test$communicate == "Disagree" &  communicate_test$gender == "Female", count_gender$n[1], "Wrong")
-communicate_test
+count_gender$percent = round(count_gender$n / dim(communicate_test)[1],2)
+count_gender
+count_gender$comm_gender = paste0(count_gender$communicate, ",", count_gender$gender)
 
-count_gender = ifelse(communicate_test$communicate)
+count_gender$n_freq = paste0("n=", " ",count_gender$n)
+plot_communicate_gender = ggplot(count_gender, aes(x = comm_gender,y = percent, fill = comm_gender))+
+  geom_bar(stat = "identity")+
+  labs(title="The use of technology accessed through Centerstone has helped me \n reduce my substance use.", x ="Response option", y = "Percent")+
+  scale_y_continuous(labels = scales::percent, limits = c(0,1))+scale_fill_manual(values = c("red", "blue", "red", "blue", "red"))+
+  theme(legend.position = "none")+
+  geom_text_repel(label = count_gender$n_freq, vjust = -.5)
+plot_communicate_gender
+
+
 ```
 
 
